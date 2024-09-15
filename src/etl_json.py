@@ -21,8 +21,7 @@ class DuckdbETL:
         return self.df.show()
     
     def filter_select(self,query):
-        #duckdb.from_df(self.df).create('temp_table')
         duckdb.register('temp_table', self.df)
         result = duckdb.query(query).fetchdf()
-        #duckdb.query(query).fetchdf()
-        return result
+        print(duckdb.df(result))
+        return duckdb.df(result)
