@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.12"
 duckdb = "^1.1.0"
 pandas = "^2.2.2"
+faker = "^28.4.1"
 
 
 [build-system]

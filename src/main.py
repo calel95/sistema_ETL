@@ -20,6 +20,8 @@ from etl_json import DuckdbETL
 
 etl = DuckdbETL()
 etl.carrega_one_json("json1")
-query = "SELECT * FROM temp_table WHERE produto like '%Camiseta%' "
+query = "SELECT * FROM tabela WHERE produto like '%Camiseta%' "
+#etl.testando(query)
 result_df = etl.filter_select(query)
+#print(result_df)
 #df_all_jsons.filter_select("select * from ")
