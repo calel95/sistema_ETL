@@ -18,7 +18,7 @@ for _ in range(5):
         }
 
 
-    lista.append(x[0])
+    lista.append(x)
 
     #faker.uid
 
@@ -28,7 +28,7 @@ print(lista)
 
 #lista = json(lista)
 
-file_path = "C:/Users/Calel/OneDrive/Área de Trabalho/Python/sistema_ETL/data/json/weste.json"
+file_path = "weste.json"
 
 with open (file_path, "w") as json_file:
     json.dump(lista,json_file, indent=4, ensure_ascii=False)
