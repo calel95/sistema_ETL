@@ -10,16 +10,16 @@ class DuckdbETL:
     
 
 
-    def carrega_one_json(self, arquive_name):
+    def json_input_one(self, arquive_name: str):
         '''apenas o nome do arquivo json'''
         #os.chdir('..')
         file_path = f"data/json/{arquive_name}.json"
         self.df = duckdb.read_json(f"data/json/{arquive_name}.json")
-        tamanho = os.path.getsize(file_path)
-        print(f"Tamanho do arquivo '{arquive_name}': {tamanho} bytes")
+        size = os.path.getsize(file_path)
+        print(f"Size do arquivo '{arquive_name}': {size} bytes")
         #return self.df
     
-    def carrega_all_jsons(self):
+    def json_all_input(self):
         self.df = duckdb.read_json("data/json/*.json")
         return self.df
     
@@ -27,15 +27,10 @@ class DuckdbETL:
         return self.df.show()
     
     def filter_select(self,query):
-        duckdb.register('tabela', self.df)
+        """Considerar FROM na tabela vw"""
+        duckdb.register('VW', self.df)
         result = duckdb.query(query).df()
         print(duckdb.df(result))
-        print(self.df)
         return duckdb.df(result)
     
 
-    def testando(self,query):
-        duckdb.register('tabela', self.df)
-        resultado = duckdb.sql(query).df()
-        print(resultado)
-        return duckdb.df(resultado)
