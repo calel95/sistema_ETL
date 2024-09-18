@@ -6,7 +6,7 @@ import os
 import re
 
 faker = Faker()
-Faker.seed(0)
+#Faker.seed(0)
 
 class Gerador:
     def __init__(self) -> None:
@@ -26,7 +26,7 @@ class Gerador:
 
             self.lista.append(register)
 
-    def output_csv(self, file_name: str):
+    def output_csv_overwrite(self, file_name: str):
         file_path_old = os.getcwd()
         file_path = file_path_old.replace("src","data/csv/").replace('\\','/')
         file_path_new = file_path+file_name+".csv"
@@ -38,12 +38,37 @@ class Gerador:
 
         print(f"Archive genetored in {file_path_new}")
 
-    def output_json(self, file_name: str):
+    def output_json_overwrite(self, file_name: str):
         file_path_old = os.getcwd()
         file_path = file_path_old.replace("src","data/json/").replace('\\','/')
         file_path_new = file_path+file_name+".json"
         with open (file_path_new, "w") as json_file:
             json.dump(self.lista,json_file, indent=4, ensure_ascii=False)
+
+        print(f"Archive genetored in {file_path_new}")
+
+    def output_csv_append(self, file_name: str):
+        file_path_old = os.getcwd()
+        file_path = file_path_old.replace("src","data/csv/").replace('\\','/')
+        file_path_new = file_path+file_name+".csv"
+        with open (file_path_new, "a", newline='') as csv_file:
+            writer = csv.DictWriter(csv_file, fieldnames=["ID", "Name", "created_at", "Salary"], delimiter=";")
+            writer.writerows(self.lista)
+            # for row in self.lista:
+            #     writer.writerow(row)
+        print(f"Archive genetored in {file_path_new}")
+
+    def output_json_append(self, file_name: str):
+        file_path_old = os.getcwd()
+        file_path = file_path_old.replace("src","data/json/").replace('\\','/')
+        file_path_new = file_path+file_name+".json"
+        with open(file_path_new, "r") as json_file:
+            existing_data = json.load(json_file)
+            existing_data.extend(self.lista)
+            self.lista = existing_data
+
+        with open(file_path_new, "w") as json_file:
+            json.dump(self.lista, json_file, indent=4, ensure_ascii=False)
 
         print(f"Archive genetored in {file_path_new}")
 

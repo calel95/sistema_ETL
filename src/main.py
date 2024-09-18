@@ -6,9 +6,9 @@ import re
 
 
 a = Gerador()
-a.generator_of_registers(1000)
-a.output_csv("testando_csv")
-a.output_json("testando_json")
+a.generator_of_registers(5)
+#a.output_json_overwrite("testando_json")
+a.output_json_append("testando_json")
 
 # etl = DuckdbETL()
 # etl.json_input_one("tst")
