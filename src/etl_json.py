@@ -17,20 +17,25 @@ class DuckdbETL:
         self.df = duckdb.read_json(f"data/json/{arquive_name}.json")
         size = os.path.getsize(file_path)
         print(f"Size do arquivo '{arquive_name}': {size} bytes")
-        #return self.df
+        return self.df
     
     def json_all_input(self):
         self.df = duckdb.read_json("data/json/*.json")
         return self.df
     
     def select_table(self):
-        return self.df.show()
+        print(self.df)
     
     def filter_select(self,query):
         """Considerar FROM na tabela vw"""
         duckdb.register('VW', self.df)
         result = duckdb.query(query).df()
-        print(duckdb.df(result))
-        return duckdb.df(result)
+        self.df = result
+        return self.df
     
+    def save_parquet_table(self,file_name: str):
+        output_path = f"data/parquet/{file_name}.parquet"
+        self.df.to_parquet(output_path)
+        print(f"DataFrame salvo como Parquet em: {output_path}")
+        
 

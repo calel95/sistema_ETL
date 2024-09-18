@@ -11,6 +11,7 @@ duckdb = "^1.1.0"
 pandas = "^2.2.2"
 faker = "^28.4.1"
 tqdm = "^4.66.5"
+pyarrow = "^17.0.0"
 
 
 [build-system]
