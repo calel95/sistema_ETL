@@ -14,7 +14,7 @@ class Gerador:
         self.lista = []
 
 
-    def generator_of_registers(self,register_number: int):
+    def generator_of_registers_dict(self,register_number: int):
         for _ in tqdm(range(register_number), desc="Generating registers"):
             number_float = faker.pyfloat(left_digits=4,right_digits=2,positive=True)
             register = faker.json(data_columns={"ID": "uuid4",
@@ -27,14 +27,24 @@ class Gerador:
 
             self.lista.append(register)
 
+    def generator_of_registers_list(self,register_number: int):
+        self.lista.append(["Id","Nome","Salario"])
+        for _ in tqdm(range(register_number), desc="Generating registers"):
+            number_float = faker.pyfloat(left_digits=4,right_digits=2,positive=True)
+            register = [ faker.pyint(), faker.name(), number_float] #por padrao ele grava o dicionario como string
+            
+            #register = json.loads(register) #converte a string json em um dicionario python
 
-    def output_csv_overwrite(self, file_name: str):
+            self.lista.append(register)
+        print(self.lista)
+
+
+    def output_csv_ovwewrite(self, file_name: str):
         file_path_old = os.getcwd()
         file_path = file_path_old.replace("src","data/csv/").replace('\\','/')
         file_path_new = file_path+file_name+".csv"
         with open (file_path_new, "w", newline='') as csv_file:
-            writer = csv.DictWriter(csv_file, fieldnames=["ID", "Name", "created_at", "Salary"], delimiter=";")
-            writer.writeheader()
+            writer = csv.writer(csv_file)
             for row in self.lista:
                 writer.writerow(row)
 
@@ -53,11 +63,13 @@ class Gerador:
         file_path_old = os.getcwd()
         file_path = file_path_old.replace("src","data/csv/").replace('\\','/')
         file_path_new = file_path+file_name+".csv"
-        with open (file_path_new, "a", newline='') as csv_file:
-            writer = csv.DictWriter(csv_file, fieldnames=["ID", "Name", "created_at", "Salary"], delimiter=";")
-            writer.writerows(self.lista)
-            # for row in self.lista:
-            #     writer.writerow(row)
+        with open(file_path_new, "a", newline='') as csv_file:
+            writer = csv.writer(csv_file)
+            # Adicionar cada linha da lista ao final do arquivo
+            for row in self.lista[1:]:
+                writer.writerow(row)
+        
+
         print(f"Archive genetored in {file_path_new}")
 
     def output_json_append(self, file_name: str):

@@ -37,5 +37,3 @@ class DuckdbETL:
         output_path = f"data/parquet/{file_name}.parquet"
         self.df.to_parquet(output_path)
         print(f"DataFrame salvo como Parquet em: {output_path}")
-        
-
