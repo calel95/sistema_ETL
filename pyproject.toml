@@ -12,6 +12,7 @@ pandas = "^2.2.2"
 faker = "^28.4.1"
 tqdm = "^4.66.5"
 pyarrow = "^17.0.0"
+pytest = "^8.3.3"
 
 
 [build-system]
