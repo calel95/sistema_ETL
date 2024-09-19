@@ -13,7 +13,7 @@ import glob
 
 # #a.output_csv_append("testando_csv")
 
-# etl = DuckdbETL()
+etl = DuckdbETL()
 # etl.all_input_json()
 # #etl.teste_all_input_json()
 # #query = "SELECT * FROM VW WHERE name like 'A%' "
