@@ -1,6 +1,8 @@
 import duckdb 
 import os
 import pandas as pd
+from openpyxl.workbook import Workbook
+
 
 class DuckdbETL:
     def __init__(self) -> None:
@@ -44,14 +46,32 @@ class DuckdbETL:
     def select_table(self):
         print(self.df)
     
-    def filter_select(self,query):
-        """Considerar o nome da tabela de VW"""
+    def filter_select(self,query,save_df = False):
+        """Considerar o nome da tabela de VW.
+            Se deseja salvar o resultado no DF setar o parametro save_df como True"""
         duckdb.register('VW', self.df)
         result = duckdb.query(query).df()
-        self.df = duckdb.df(result)
-        return self.df
+        if save_df:
+            self.df = duckdb.df(result)
+            return self.df
+        else:
+            return self.df
     
     def save_parquet_table(self,file_name: str):
         output_path = f"data/parquet/{file_name}.parquet"
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
         self.df.to_parquet(output_path)
         print(f"DataFrame salvo como Parquet em: {output_path}")
+
+    def save_csv_table(self,file_name: str):
+        output_path = f"data/excel/{file_name}.xlsx"
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        self.df.to_csv(output_path)
+        print(f"DataFrame salvo como csv em: {output_path}")
+
+    def remove_dados_duplicados(self):
+        duckdb.register('VW', self.df)
+        query = "select distinct * from VW"
+        result = duckdb.query(query).df()
+        self.df = duckdb.df(result)
+        return self.df

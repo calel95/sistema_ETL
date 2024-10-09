@@ -1,0 +1,42 @@
+[
+    {
+    "produto": "Camiseta Social",
+    "preco": 40,
+    "created_at": "2024-09-15T19:06:40",
+    "id": "b218802e-4aa7-4caf-aa00-9d5833a05d0e",
+    "updated": false,
+    "update_date": null
+  },
+  {
+    "produto": "Camiseta Polo",
+    "preco": 89,
+    "created_at": "2024-09-15T19:06:53",
+    "id": "ba75943a-abcb-4a65-84f2-71b0aa63df6a",
+    "updated": false,
+    "update_date": null
+  },
+  {
+    "produto": "Teclado",
+    "preco": 280,
+    "created_at": "2024-09-15T19:07:04",
+    "id": "2167a6e8-87b1-417a-8813-3252032e8bd1",
+    "updated": false,
+    "update_date": null
+  },
+  {
+    "produto": "Mouse",
+    "preco": 120,
+    "created_at": "2024-09-15T19:07:12",
+    "id": "f2cfa112-72dc-4925-9610-3c31dc5a7a47",
+    "updated": false,
+    "update_date": null
+  },
+  {
+    "produto": "Copo",
+    "preco": 19,
+    "created_at": "2024-09-15T19:07:38",
+    "id": "4ae14f82-a47c-45bb-9b42-4a5f34860622",
+    "updated": false,
+    "update_date": null
+  }
+]
