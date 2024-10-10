@@ -8,7 +8,7 @@ pipelipe {
             }
         stage('create_faker_date'){
             steps{
-                sh 'src/create_faker_data.py'
+                sh 'src/main.py'
                 }
             }
         }
