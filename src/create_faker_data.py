@@ -24,9 +24,12 @@ class Gerador:
             self.lista.append(register)
 
     def generator_of_registers_list(self,register_number: int):
-        self.lista.append(["Id","Nome","Salario"])
+        self.lista.append(["Id","Nome","Salario","created_at"])
         for _ in tqdm(range(register_number), desc="Generating registers"):
-            register = [ faker.pyint(), faker.name(), faker.pyfloat(left_digits=4,right_digits=2,positive=True)] #por padrao ele grava o dicionario como string           
+            register = [faker.pyint(),
+                        faker.name(),
+                        faker.pyfloat(left_digits=4,right_digits=2,positive=True),
+                        faker.iso8601()] #por padrao ele grava o dicionario como string           
             self.lista.append(register)
 
     def output_csv_ovwewrite(self, file_name: str):        

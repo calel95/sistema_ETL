@@ -6,21 +6,23 @@ import pandas as pd
 import glob
 
 
-# a = Gerador()
-# a.generator_of_registers_list(10000)
-# a.output_csv_ovwewrite("teste1")
+#a = Gerador()
+#a.generator_of_registers_list(20000)
+#a.output_csv_ovwewrite("last_position")
 
 
 # #a.output_csv_append("testando_csv")
 
 etl = DuckdbETL()
-etl.one_input_csv("teste1")
+#etl.read_parquet()
+etl.one_input_csv("last_position")
+etl.last_position_data("created_at","nome")
 # # etl.all_input_json()
 # # #etl.teste_all_input_json()
-query = f"SELECT count(*), name FROM VW group by name having count(*)>1 "
+#query = f"SELECT count(*), nome FROM VW group by nome having count(*)>1 "
 # # #etl.testando(query)
-etl.filter_select(query)
+#etl.filter_select(query)
 # #etl.remove_dados_duplicados()
-#etl.select_table()
+etl.select_table()
 # #print(result_df)
-etl.save_parquet_table("teste1")
+#etl.save_parquet_table("last_position")

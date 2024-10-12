@@ -1,7 +1,7 @@
 import duckdb 
 import os
 import pandas as pd
-from openpyxl.workbook import Workbook
+#from openpyxl.workbook import Workbook
 
 
 class DuckdbETL:
@@ -78,6 +78,33 @@ class DuckdbETL:
         self.df = duckdb.df(result)
         return self.df
     
-    def last_position_data(self,campo_position):
-        pass
+    def last_position_data(self,column_order_by,column_partition_by,save_df = False):
+        duckdb.register('VW', self.df)
+        query = f"SELECT * EXCLUDE(rn) from (select *, ROW_NUMBER() OVER(PARTITION BY {column_partition_by} order by {column_order_by} desc)as rn from VW) where rn = 1 and nome = 'Michael Johnson'"
+        result = duckdb.query(query).df()
+        if save_df:
+            self.df = duckdb.df(result)
+            return self.df
+        else:
+            print(duckdb.df(result))
+            return self.df
     
+    def first_position_data(self,column_order_by,column_partition_by,save_df = False):
+        duckdb.register('VW', self.df)
+        query = f"SELECT * EXCLUDE(rn) from (select *, ROW_NUMBER() OVER(PARTITION BY {column_partition_by} order by {column_order_by} asc)as rn from VW) where rn = 1 and nome = 'Michael Johnson'"
+        result = duckdb.query(query).df()
+        if save_df:
+            self.df = duckdb.df(result)
+            return self.df
+        else:
+            print(duckdb.df(result))
+            return self.df
+
+    
+    def read_parquet(self):
+        self.df = duckdb.connect()
+        self.df.execute("CREATE VIEW df as select * from read_parquet('/home/casa/Python/sistema_ETL/data/parquet/last_position.parquet')")
+        self.df = self.df.execute("SELECT id,nome,salario,created_at from (select *, ROW_NUMBER() OVER(PARTITION BY nome order by created_at desc)as rn from df) where rn = 1 and nome = 'Michael Johnson'").df()
+        #print(self.df.execute("SELECT * from df where nome = 'Michael Johnson'").df())
+        print(duckdb.df(self.df))
+        return self.df
