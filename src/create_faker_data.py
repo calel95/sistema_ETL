@@ -29,10 +29,11 @@ class Gerador:
             register = [ faker.pyint(), faker.name(), faker.pyfloat(left_digits=4,right_digits=2,positive=True)] #por padrao ele grava o dicionario como string           
             self.lista.append(register)
 
-    def output_csv_ovwewrite(self, file_name: str):
+    def output_csv_ovwewrite(self, file_name: str):        
         file_path_old = os.getcwd()
         file_path = file_path_old.replace("src","data/csv/").replace('\\','/')
         file_path_new = file_path+file_name+".csv"
+        os.makedirs(os.path.dirname(file_path_new), exist_ok=True)
         with open (file_path_new, "w", newline='') as csv_file:
             writer = csv.writer(csv_file)
             for row in self.lista:
@@ -43,6 +44,7 @@ class Gerador:
         file_path_old = os.getcwd()
         file_path = file_path_old.replace("src","data/json/").replace('\\','/')
         file_path_new = file_path+file_name+".json"
+        os.makedirs(os.path.dirname(file_path_new), exist_ok=True)
         with open (file_path_new, "w") as json_file:
             json.dump(self.lista,json_file, indent=4, ensure_ascii=False)
         print(f"Archive genetored in {file_path_new}")
@@ -51,6 +53,7 @@ class Gerador:
         file_path_old = os.getcwd()
         file_path = file_path_old.replace("src","data/csv/").replace('\\','/')
         file_path_new = file_path+file_name+".csv"
+        os.makedirs(os.path.dirname(file_path_new), exist_ok=True)
         with open(file_path_new, "a", newline='') as csv_file:
             writer = csv.writer(csv_file)
             for row in self.lista[1:]:
@@ -61,6 +64,7 @@ class Gerador:
         file_path_old = os.getcwd()
         file_path = file_path_old.replace("src","data/json/").replace('\\','/')
         file_path_new = file_path+file_name+".json"
+        os.makedirs(os.path.dirname(file_path_new), exist_ok=True)
         with open(file_path_new, "r") as json_file:
             existing_data = json.load(json_file)
             existing_data.extend(self.lista)

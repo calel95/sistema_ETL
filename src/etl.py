@@ -55,7 +55,9 @@ class DuckdbETL:
             self.df = duckdb.df(result)
             return self.df
         else:
+            print(duckdb.df(result))
             return self.df
+            
     
     def save_parquet_table(self,file_name: str):
         output_path = f"data/parquet/{file_name}.parquet"
@@ -63,15 +65,19 @@ class DuckdbETL:
         self.df.to_parquet(output_path)
         print(f"DataFrame salvo como Parquet em: {output_path}")
 
-    def save_csv_table(self,file_name: str):
+    def save_xlsx_table(self,file_name: str):
         output_path = f"data/excel/{file_name}.xlsx"
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         self.df.to_csv(output_path)
-        print(f"DataFrame salvo como csv em: {output_path}")
+        print(f"DataFrame salvo como xlsx em: {output_path}")
 
-    def remove_dados_duplicados(self):
+    def remove_data_duplicates(self):
         duckdb.register('VW', self.df)
         query = "select distinct * from VW"
         result = duckdb.query(query).df()
         self.df = duckdb.df(result)
         return self.df
+    
+    def last_position_data(self,campo_position):
+        pass
+    

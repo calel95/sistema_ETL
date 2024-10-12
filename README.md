@@ -4,7 +4,9 @@ Funcoes do Sistema
 - Criar tabelas de arquivos json e csv
 - carregar um ou varios arquivos csv ou json
 - implementar opcao de filtros por query externa
-- 
+- remover dados duplicados
+- pegar o registro mais atualizado
+
 -- -
 To do
 - criar frontend
