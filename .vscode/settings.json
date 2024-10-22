@@ -9,7 +9,6 @@
         "**/__pycache__": true,
         "**/.pytest_cache": true,
         "**/__init__.py": true,
-        "**/.venv": true,
-        "**/.env": true,
+        "**/.venv": true
     }
 }
