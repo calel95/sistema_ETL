@@ -14,3 +14,11 @@ To do
 - devolver o arquivo no front para download
 - adicionar os filtros no frontend, opces que o usuario vai querer fazer de tratamento nos dados
 - criar frontend possivel de fazer upload de um arquivo, ele pegar o arquivo, fazer a criacao da tabela, e jogar de volta para usuario fazer download
+
+Para definir variavel de ambiente no Windows, utilizar os comando abaixo no terminal
+
+    setx OPENAI_API_KEY "your_api_key_here"
+
+No Linux
+
+    export OPENAI_API_KEY="your_api_key_here"
