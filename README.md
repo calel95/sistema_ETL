@@ -6,7 +6,7 @@ Funcoes do Sistema
 - implementar opcao de filtros por query externa
 - remover dados duplicados
 - pegar o registro mais atualizado
-
+- usar openia para a selecao das colunas
 -- -
 To do
 - criar frontend
