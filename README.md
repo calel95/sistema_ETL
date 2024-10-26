@@ -1,12 +1,12 @@
 Sistema de ETL de arquivos, primeiramente fazer ETL de arquivos CSV e JSON, podendo ler um ou varios arquivos do mesmo tipo e criando a tabela.
 
 Funcoes do Sistema
-- Criar tabelas de arquivos json e csv
-- carregar um ou varios arquivos csv ou json
-- implementar opcao de filtros por query externa
-- remover dados duplicados
-- pegar o registro mais atualizado
-- usar openia para a selecao das colunas
+- ~~Criar tabelas de arquivos json e csv~~
+- ~~carregar um ou varios arquivos csv ou json~~
+- ~~implementar opcao de filtros por query externa~~
+- ~~remover dados duplicados~~
+- ~~pegar o registro mais atualizado~~
+- ~~usar openia para a selecao das colunas~~
 -- -
 To do
 - criar frontend
