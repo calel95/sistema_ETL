@@ -5,6 +5,7 @@ import csv
 import os
 import re
 from multiprocessing import Pool
+from openai import OpenAI
 
 faker = Faker()
 #Faker.seed(0)
@@ -12,7 +13,64 @@ faker = Faker()
 class Gerador:
     def __init__(self) -> None:
         self.lista = []
+        self.dicionario = {}
     
+    def definir_tipo_campo(self):
+        self.dicionario = {}
+        OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+        client = OpenAI(api_key=OPENAI_API_KEY,
+                    organization="org-A3JkXtHMhCov5RgteRlpCgeK",
+                    project="proj_lO7EfhSBhcPNC2mRr7eWDviq")
+        
+        while True:       
+            campo = input("Digite o nome do campo (ou 'sair' para encerrar): ")
+            if campo.lower() == 'sair':
+                print(self.dicionario)
+                break
+            try:
+                mensagens = [
+                {'role': 'system', 'content': 'Você é um especialista na biblioteca do faker("pt_BR") do python, voce precisa usar a funcao mais adequada do faker de acordo com o nome da coluna que usuario digitar. Digite apenas o nome da funcao. Exemplo faker.pyint(), faker.name()'},
+                {'role': 'user', 'content': campo}
+                ]
+
+                response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=mensagens,
+                max_tokens=50,
+                temperature=0.7,
+                )
+
+                type_column = response.choices[0].message.content
+                print(f"O campo '{campo}' provavelmente deve ser do tipo: {type_column}")
+                self.dicionario[f"{campo}"] = f"{type_column}"
+            except Exception as e:
+                print(f"Ocorreu um erro ao processar o campo: {e}")
+                #print(type_column)
+            print(self.dicionario)
+        return self.dicionario
+            
+    def generator_teste(self,register_number: int):
+        #self.lista.append([i for i in self.dicionario.keys()])
+        self.lista.append(list(self.dicionario.keys()))  
+        
+        for _ in tqdm(range(register_number), desc="Generating registers"):
+            registro = {}
+            # register = {"id": faker.sha1(),
+            #             "name": faker.name(),
+            #             "created_at": faker.iso8601(),
+            #             "salary": faker.pyfloat(left_digits=4,right_digits=2,positive=True),
+            #             "active": faker.pybool()}          
+            for coluna, funcao in self.dicionario.items():
+            # Avalia a função faker armazenada como string e atribui o valor ao registro
+                #print("AA=",self.dicionario[coluna])
+                #print("BB=", list(self.dicionario[coluna])[0])
+            #    self.dicionario[coluna] = funcao
+            #print(list(self.dicionario.values()))
+                registro[coluna] = eval(funcao)
+            self.lista.append(registro)
+
+        print(self.lista)
+        return self.lista
 
     def generator_of_registers_dict(self,register_number: int):
         for _ in tqdm(range(register_number), desc="Generating registers"):
