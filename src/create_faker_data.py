@@ -6,6 +6,7 @@ import os
 import re
 from multiprocessing import Pool
 from openai import OpenAI
+from typing import Literal
 
 faker = Faker()
 #Faker.seed(0)
@@ -29,7 +30,7 @@ class Gerador:
                 break
             try:
                 mensagens = [
-                {'role': 'system', 'content': 'Você é um especialista na biblioteca do faker("pt_BR") do python, voce precisa usar a funcao mais adequada do faker de acordo com o nome da coluna que usuario digitar. Digite apenas o nome da funcao. Exemplo faker.pyint(), faker.name()'},
+                {'role': 'system', 'content': 'Você é um especialista na biblioteca do faker("pt_BR") do python, voce precisa usar a funcao mais adequada do faker de acordo com o nome da coluna que usuario digitar, se necessario pode adicionar parametros. Digite apenas o nome da funcao. Exemplo faker.pyint(), faker.name()'},
                 {'role': 'user', 'content': campo}
                 ]
 
@@ -49,27 +50,46 @@ class Gerador:
             print(self.dicionario)
         return self.dicionario
             
-    def generator_teste(self,register_number: int):
+    def generator_teste(self,register_number: int,format: Literal["Dict","List"]):
         #self.lista.append([i for i in self.dicionario.keys()])
-        self.lista.append(list(self.dicionario.keys()))  
-        
-        for _ in tqdm(range(register_number), desc="Generating registers"):
-            registro = {}
-            # register = {"id": faker.sha1(),
-            #             "name": faker.name(),
-            #             "created_at": faker.iso8601(),
-            #             "salary": faker.pyfloat(left_digits=4,right_digits=2,positive=True),
-            #             "active": faker.pybool()}          
-            for coluna, funcao in self.dicionario.items():
-            # Avalia a função faker armazenada como string e atribui o valor ao registro
-                #print("AA=",self.dicionario[coluna])
-                #print("BB=", list(self.dicionario[coluna])[0])
-            #    self.dicionario[coluna] = funcao
-            #print(list(self.dicionario.values()))
-                registro[coluna] = eval(funcao)
-            self.lista.append(registro)
+        #self.lista.append(list(self.dicionario.keys()))  
+        if format == "Dict":
+            for _ in tqdm(range(register_number), desc="Generating registers"):
+                registro = {}
+                # register = {"id": faker.sha1(),
+                #             "name": faker.name(),
+                #             "created_at": faker.iso8601(),
+                #             "salary": faker.pyfloat(left_digits=4,right_digits=2,positive=True),
+                #             "active": faker.pybool()}          
+                for coluna, funcao in self.dicionario.items():
+                # Avalia a função faker armazenada como string e atribui o valor ao registro
+                    #print("AA=",self.dicionario[coluna])
+                    #print("BB=", list(self.dicionario[coluna])[0])
+                #    self.dicionario[coluna] = funcao
+                #print(list(self.dicionario.values()))
+                    registro[coluna] = eval(funcao)
+                self.lista.append(registro)
 
-        print(self.lista)
+            print(self.lista)
+        else:
+            self.lista.append(list(self.dicionario.keys())) 
+            for _ in tqdm(range(register_number), desc="Generating registers"):
+                registro = []
+                # register = {"id": faker.sha1(),
+                #             "name": faker.name(),
+                #             "created_at": faker.iso8601(),
+                #             "salary": faker.pyfloat(left_digits=4,right_digits=2,positive=True),
+                #             "active": faker.pybool()}          
+                for coluna, funcao in self.dicionario.items():
+                # Avalia a função faker armazenada como string e atribui o valor ao registro
+                    #print("AA=",self.dicionario[coluna])
+                    #print("BB=", list(self.dicionario[coluna])[0])
+                #    self.dicionario[coluna] = funcao
+                #print(list(self.dicionario.values()))
+                    registro.append(eval(funcao))
+                self.lista.append(registro)
+
+            print(self.lista)
         return self.lista
 
     def generator_of_registers_dict(self,register_number: int):

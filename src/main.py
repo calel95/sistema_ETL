@@ -8,11 +8,11 @@ import glob
 
 a = Gerador()
 a.definir_tipo_campo()
-a.generator_teste(10)
+a.generator_teste(100,"List")
 #a.output_csv_ovwewrite("last_position")
 
 
-a.output_json_overwrite("teste_generator")
+a.output_csv_ovwewrite("teste_generator")
 
 #etl = DuckdbETL()
 #etl.read_parquet()

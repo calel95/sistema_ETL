@@ -34,11 +34,6 @@ class DuckdbETL:
         self.df = duckdb.read_csv("data/csv/*.csv")
         return self.df
     
-    def teste_all_input_json(self):
-        con = duckdb.connect()
-        self.df = con.execute("SELECT * FROM read_json_auto('data/json/*.json')").df()
-        return self.df
-    
     def all_input_json(self):
         self.df = duckdb.read_json("data/json/*.json")
         return self.df
@@ -78,6 +73,9 @@ class DuckdbETL:
         self.df = duckdb.df(result)
         return self.df
     
+    def remove_data_nulls(self):
+        pass
+    
     def last_position_data(self,column_order_by,column_partition_by,save_df = False):
         duckdb.register('VW', self.df)
         query = f"SELECT * EXCLUDE(rn) from (select *, ROW_NUMBER() OVER(PARTITION BY {column_partition_by} order by {column_order_by} desc)as rn from VW) where rn = 1 and nome = 'Michael Johnson'"
@@ -101,10 +99,10 @@ class DuckdbETL:
             return self.df
 
     
-    def read_parquet(self):
-        self.df = duckdb.connect()
-        self.df.execute("CREATE VIEW df as select * from read_parquet('/home/casa/Python/sistema_ETL/data/parquet/last_position.parquet')")
-        self.df = self.df.execute("SELECT id,nome,salario,created_at from (select *, ROW_NUMBER() OVER(PARTITION BY nome order by created_at desc)as rn from df) where rn = 1 and nome = 'Michael Johnson'").df()
-        #print(self.df.execute("SELECT * from df where nome = 'Michael Johnson'").df())
-        print(duckdb.df(self.df))
-        return self.df
+    # def read_parquet(self):
+    #     self.df = duckdb.connect()
+    #     self.df.execute("CREATE VIEW df as select * from read_parquet('/home/casa/Python/sistema_ETL/data/parquet/last_position.parquet')")
+    #     self.df = self.df.execute("SELECT id,nome,salario,created_at from (select *, ROW_NUMBER() OVER(PARTITION BY nome order by created_at desc)as rn from df) where rn = 1 and nome = 'Michael Johnson'").df()
+    #     #print(self.df.execute("SELECT * from df where nome = 'Michael Johnson'").df())
+    #     print(duckdb.df(self.df))
+    #     return self.df
