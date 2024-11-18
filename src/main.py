@@ -36,8 +36,8 @@ df = extract.one_input_csv("arquivo_teste")
 
 transform = Transform(df)
 #query = "select * from VW where name = 'Katelyn Hull'"
-#transform.select_table()
-transform.remove_data_nulls('name')
+transform.select_table()
+transform.remove_data_nulls(['name','salary'])
 #df = transform.filter_select(query,True)
 
 load = Load(df)
