@@ -8,7 +8,6 @@ class Load:
         self.df = df
 
     def save_parquet_table(self,file_name: str):
-        print(self.df)
         output_path = f"data/parquet/{file_name}.parquet"
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         self.df.to_parquet(output_path)

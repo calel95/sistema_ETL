@@ -1,9 +1,8 @@
 import duckdb 
 import os
-from pipeline.etl import DuckdbETL
-from pipeline.extract import Extract
-from pipeline.transform import Transform
-from pipeline.load import Load
+from etl_process.extract import Extract
+from etl_process.transform import Transform
+from etl_process.load import Load
 #from create_faker_data import Gerador
 import pandas as pd
 import glob
@@ -38,8 +37,8 @@ df = extract.one_input_csv("arquivo_teste")
 transform = Transform(df)
 #query = "select * from VW where name = 'Katelyn Hull'"
 #transform.select_table()
-transform.remove_data_nulls()
+transform.remove_data_nulls('name')
 #df = transform.filter_select(query,True)
 
-#load = Load(df)
-#load.save_parquet_table("teste3")
+load = Load(df)
+load.save_parquet_table("teste3")
