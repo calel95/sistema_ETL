@@ -6,7 +6,7 @@ class Extract:
     def __init__(self) -> None:
         #self.file_path = file_path
         self.df = None
-    #     os.chdir('..')
+        #os.chdir('..')
 
     # def one_input_json(self, arquive_name: str):
     #     '''apenas o nome do arquivo json'''

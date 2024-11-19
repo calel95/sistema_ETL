@@ -9,5 +9,8 @@
         "**/__pycache__": true,
         "**/.pytest_cache": true,
         "**/.venv": true
-    }
+    },
+    "python.analysis.extraPaths": [
+        "./src/backend"
+    ],
 }
