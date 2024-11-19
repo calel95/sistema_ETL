@@ -7,9 +7,14 @@ import re
 from multiprocessing import Pool
 from openai import OpenAI
 from typing import Literal
+from dotenv import load_dotenv
 
+load_dotenv()
 faker = Faker()
 #Faker.seed(0)
+
+OPENAI_ORGANIZATION = os.getenv("OPENAI_ORGANIZATION")
+OPENAI_PROJECT = os.getenv("OPENAI_PROJECT")
 
 class Gerador:
     def __init__(self) -> None:
@@ -20,8 +25,8 @@ class Gerador:
         self.dicionario = {}
         OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
         client = OpenAI(api_key=OPENAI_API_KEY,
-                    organization="org-A3JkXtHMhCov5RgteRlpCgeK",
-                    project="proj_lO7EfhSBhcPNC2mRr7eWDviq")
+                    organization=OPENAI_ORGANIZATION,
+                    project=OPENAI_PROJECT)
         
         while True:       
             campo = input("Digite o nome do campo (ou 'sair' para encerrar): ")
@@ -110,7 +115,7 @@ class Gerador:
                         faker.iso8601()] #por padrao ele grava o dicionario como string           
             self.lista.append(register)
 
-    def output_csv_ovwewrite(self, file_name: str):        
+    def output_csv_ovwewrite(self, file_name: str):       
         file_path_old = os.getcwd()
         file_path = file_path_old.replace("src","data/csv/").replace('\\','/')
         file_path_new = file_path+file_name+".csv"
