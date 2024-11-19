@@ -8,10 +8,10 @@ import pandas as pd
 import glob
 
 
-a = Gerador()
-a.definir_tipo_campo()
-a.generator_teste(100,"Dict")
-a.output_csv_ovwewrite("cc")
+# a = Gerador()
+# a.definir_tipo_campo()
+# a.generator_teste(100,"Dict")
+# a.output_csv_ovwewrite("cc")
 
 
 #a.output_csv_ovwewrite("teste_generator")
@@ -30,15 +30,18 @@ a.output_csv_ovwewrite("cc")
 # #print(result_df)
 #etl.save_parquet_table("last_position")
 
-#extract = Extract()
-#df = extract.one_input_csv("arquivo_teste")
-#print(type(extract))
+extract = Extract()
+df = extract.one_input_csv("arquivo_teste")
 
-#transform = Transform(df)
-#query = "select * from VW where name = 'Katelyn Hull'"
-#transform.select_table()
-#transform.remove_data_nulls(['name','salary'])
-#df = transform.filter_select(query,True)
+transform = Transform(df)
+query = "select * from VW where name = 'Emily Allen'"
+transform.select_table()
+transform.remove_data_nulls(['name','salary'])
+transform.select_table()
+transform.remove_data_duplicates()
+transform.select_table()
+transform.filter_select(query,True)
+transform.select_table()
 
 #load = Load(df)
 #load.save_parquet_table("teste3")

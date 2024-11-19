@@ -1,11 +1,13 @@
 import pytest
-from faker import Faker
-import json
+import os
+import sys
 
-faker = Faker()
+nomes = input()
 
-def tests():
-    pass
+lista = nomes.split(",")
+
+print(lista)
+
 
 
 

@@ -52,12 +52,12 @@ class Transform:
         where_clause_drop_registers = " OR ".join([f"{column} IS NULL" for column in columns])
         
         query = f"SELECT * FROM VW WHERE {where_clause}"
-        query_drop_registers = f"SELECT * FROM VW WHERE {where_clause_drop_registers}"
+        #query_drop_registers = f"SELECT * FROM VW WHERE {where_clause_drop_registers}"
 
         print("=========================REGISTROS DROPADOS COM REGISTROS NULLS NOS CAMPOS ESPECIFICADOS=========================")
-        result2 = duckdb.query(query_drop_registers).df()
+        #result2 = duckdb.query(query_drop_registers).df()
         result = duckdb.query(query).df()
-        print(duckdb.df(result2))
+        #print(duckdb.df(result2))
         self.df = duckdb.df(result)
         return self.df
     
