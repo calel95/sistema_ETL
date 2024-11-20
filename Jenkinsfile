@@ -6,12 +6,20 @@ pipeline {
         string(name: 'NULL_COLUMNS', defaultValue: '', description: 'Colunas para remover nulos (separadas por vírgula)')
         string(name: 'ORDER_BY', defaultValue: '', description: 'Coluna para ordenar (última posição)')
         string(name: 'PARTITION_BY', defaultValue: '', description: 'Coluna para partição (última posição)')
+        string(name: 'FILE', defaultValue: '', description: 'Caminho do arquivo CSV a ser processado')
     }
 
     stages {
+        stage('Clonar Repositório') {
+            steps {
+                // Clona o repositório Git
+                git 'https://github.com/seu_usuario/seu_repositorio.git'
+            }
+        }
         stage('Preparar Ambiente') {
             steps {
                 script {
+                    // Instala dependências
                     sh 'pip install -r jenkins/requirements.txt'
                 }
             }
@@ -19,32 +27,10 @@ pipeline {
         stage('Executar ETL') {
             steps {
                 script {
-                    // Carregar dados
-                    def extractor = new Extract()
-                    def df = extractor.web_one_input_csv(params.FILE) // Supondo que FILE seja um parâmetro de entrada
-
-                    // Aplicar transformações
-                    def transformer = new Transform(df)
-                    def options = [:]
-                    
-                    if (params.TRANSFORMATIONS.contains('remove_nulls')) {
-                        options['remove_nulls'] = true
-                        options['null_columns'] = params.NULL_COLUMNS.split(',')
-                    }
-                    if (params.TRANSFORMATIONS.contains('remove_duplicates')) {
-                        options['remove_duplicates'] = true
-                    }
-                    if (params.TRANSFORMATIONS.contains('last_position')) {
-                        options['last_position'] = true
-                        options['order_by'] = params.ORDER_BY
-                        options['partition_by'] = params.PARTITION_BY
-                    }
-
-                    df = transformer.apply_transformations(options)
-
-                    // Salvar dados
-                    def loader = new Load(df)
-                    loader.save_parquet_table('output_file')
+                    // Executar os scripts Python na pasta jenkins
+                    sh "python jenkins/extract.py ${params.FILE}"
+                    sh "python jenkins/transform.py --transformations='${params.TRANSFORMATIONS}' --null_columns='${params.NULL_COLUMNS}' --order_by='${params.ORDER_BY}' --partition_by='${params.PARTITION_BY}'"
+                    sh 'python jenkins/load.py'
                 }
             }
         }
