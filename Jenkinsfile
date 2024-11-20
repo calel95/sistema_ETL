@@ -17,6 +17,9 @@ pipeline {
             }
         }
         stage('Preparar Ambiente') {
+            when{
+                branch "versa_web_jenkins"
+            }
             steps {
                 script {
                     // Instala dependências
