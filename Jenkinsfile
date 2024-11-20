@@ -28,6 +28,9 @@ pipeline {
             }
         }
         stage('Executar ETL') {
+            when{
+                branch "versa_web_jenkins"
+            }
             steps {
                 script {
                     // Executar os scripts Python na pasta jenkins
