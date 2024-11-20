@@ -28,7 +28,7 @@ class Transform:
             print(duckdb.df(result))
             return self.df
         
-    def remove_data_duplicates(self,):
+    def remove_data_duplicates(self):
         """Remove todos os registros duplicados."""
         duckdb.register('VW', self.df)
         query = "select distinct * from VW"
@@ -82,13 +82,3 @@ class Transform:
         else:
             print(duckdb.df(result))
             return self.df
-        
-    def apply_transformations(self, options):
-        if 'remove_duplicates' in options:
-            self.df = self.remove_data_duplicates(self.df)
-        if 'remove_nulls' in options:
-            self.df = self.remove_data_nulls(self.df, options['null_columns'])
-        if 'last_position' in options:
-            self.df = self.last_position_data(self.df, options['order_by'], options['partition_by'])
-        # Adicione mais transformações conforme necessário
-        return self.df
