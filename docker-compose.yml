@@ -1,45 +1,16 @@
-# version: '3.8'
-# services:
-#   postgres:
-#     image: postgres
-#     networks:
-#       - mynetwork
+version: '3.8'
+services: 
+  jenkins:
+    build:
+      context: ./jenkins
+      dockerfile: Dockerfile
+    privileged: true
+    user: root
+    volumes:
+      - ./jenkins:/app
+    ports:
+      - "8080:8080"
+      - "50000:50000"
 
-#   backend:
-#     build:
-#       context: ./backend
-#       dockerfile: Dockerfile
-#     environment:
-#       DATABASE_URL: postgresql+psycopg2://database_rifa_user:BbhoY84Y0jbEj8k34RwodIlcp4PT42AQ@dpg-csjrqd5ds78s7394r1s0-a.oregon-postgres.render.com:5432/database_rifa  # Corrigido o caminho
-#     ports:
-#       - "8000:8000"
-#     depends_on:
-#       - postgres
-#     networks:
-#       - mynetwork
-
-#   frontend:
-#     build: 
-#       context: ./frontend
-#       dockerfile: Dockerfile
-#     volumes:
-#       - ./frontend:/app
-#     ports:
-#       - "8501:8501"
-#     networks:
-#       - mynetwork
-  
-#   jenkins:
-#     build:
-#       context: ./jenkins
-#       dockerfile: Dockerfile
-#     privileged: true
-#     user: root
-#     volumes:
-#       - ./jenkins:/app
-#     ports:
-#       - "8080:8080"
-#       - "50000:50000"
-
-# networks:
-#   mynetwork: 
+networks:
+  mynetwork: 
