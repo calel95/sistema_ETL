@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     // Instala dependências
-                    sh 'pip install -r jenkins/requirements.txt'
+                    sh 'pip install -r requirements.txt'
                 }
             }
         }
@@ -31,9 +31,9 @@ pipeline {
             steps {
                 script {
                     // Executar os scripts Python na pasta jenkins
-                    sh "python jenkins/extract.py ${params.FILE}"
-                    sh "python jenkins/transform.py --transformations='${params.TRANSFORMATIONS}' --null_columns='${params.NULL_COLUMNS}' --order_by='${params.ORDER_BY}' --partition_by='${params.PARTITION_BY}'"
-                    sh 'python jenkins/load.py'
+                    sh "python extract.py ${params.FILE}"
+                    sh "python transform.py --transformations='${params.TRANSFORMATIONS}' --null_columns='${params.NULL_COLUMNS}' --order_by='${params.ORDER_BY}' --partition_by='${params.PARTITION_BY}'"
+                    sh 'python load.py'
                 }
             }
         }
