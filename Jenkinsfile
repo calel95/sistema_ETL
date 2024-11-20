@@ -13,7 +13,7 @@ pipeline {
         stage('Clonar Repositório') {
             steps {
                 // Clona o repositório Git
-                git 'https://github.com/seu_usuario/seu_repositorio.git'
+                git 'https://github.com/calel95/sistema_ETL.git'
             }
         }
         stage('Preparar Ambiente') {
