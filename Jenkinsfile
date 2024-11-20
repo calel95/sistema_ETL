@@ -12,7 +12,7 @@ pipeline {
         stage('Preparar Ambiente') {
             steps {
                 script {
-                    sh 'pip install -r requirements.txt'
+                    sh 'pip install -r jenkins/requirements.txt'
                 }
             }
         }
