@@ -66,13 +66,9 @@ if st.button("Filtrar query"):
     else:
         st.warning("Por favor, insira uma consulta SQL válida.")
 
-if st.button("Remove duplicado e dados null"):  
-    st.session_state.df = Transform.remove_data_duplicates(st.session_state.df)
-    columns_list = columns_to_check.split(",") 
-    st.session_state.df = Transform.remove_data_nulls(st.session_state.df, columns_list)
 
 if st.button("Reverter para Dataframe original"):    
-    st.session_state.df = Transform.remove_data_duplicates(st.session_state.df_origem)
+    st.session_state.df = st.session_state.df_origem
     st.success(f"Dataframe Original!")
 
 loader = Load()
