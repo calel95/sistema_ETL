@@ -31,6 +31,7 @@ if file_type == "CSV":
         st.session_state['transformed_df'] = df
         st.write("DataFrame Original:")
         st.write(df)
+        #st.table(st.session_state['df'])
 
 elif file_type == "JSON":
     json_file = st.file_uploader("Carregar arquivo JSON", type=["json"])
