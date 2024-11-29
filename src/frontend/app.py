@@ -8,7 +8,7 @@ sys.path.insert(0, project_root)
 
 from src.backend.extract import Extract
 from src.backend.transform import Transform
-#from backend.load import Load
+from src.backend.load import Load
 
 st.title("Projeto ETL")
 
@@ -74,6 +74,21 @@ if st.button("Remove duplicado e dados null"):
 if st.button("Reverter para Dataframe original"):    
     st.session_state.df = Transform.remove_data_duplicates(st.session_state.df_origem)
     st.success(f"Dataframe Original!")
+
+loader = Load()
+
+st.header("Salvar Dados")
+
+# Adicione um campo para o usuário digitar o caminho de destino
+save_path = st.text_input("Caminho para salvar o arquivo Parquet:")
+
+if st.button("Salvar Parquet"):
+        if save_path:
+            success = loader.save_teste(st.session_state.df, save_path)
+            if success:
+                st.success(f"Arquivo Parquet salvo em {save_path}")
+            else:
+                st.error("Falha ao salvar o arquivo")
 
 st.write("DataFrame Transformado:")
 st.write(st.session_state.df)
